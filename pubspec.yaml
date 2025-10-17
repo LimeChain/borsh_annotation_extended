@@ -1,0 +1,13 @@
+name: borsh_annotation_extended
+description: An extended borsh_annotation library, based on espresso cash lib
+version: 0.0.1
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  borsh_annotation: ^0.3.2
+
+dev_dependencies:
+  lints: ^6.0.0
