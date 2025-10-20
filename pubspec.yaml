@@ -11,3 +11,6 @@ dependencies:
 
 dev_dependencies:
   lints: ^6.0.0
+  test: ^1.17.10
+  build_runner: ^2.5.4
+  borsh: ^0.3.2
