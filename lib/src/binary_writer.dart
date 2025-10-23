@@ -97,7 +97,7 @@ class ExtendedBinaryWriter extends BinaryWriter {
 
   Iterable<int> _encodeBigIntAsSigned(BigInt number, int s) {
     BigInt n = number;
-    
+
     // Handle negative numbers using two's complement
     if (n.isNegative) {
       // Calculate the maximum value for the given size (2^(s*8))
@@ -105,7 +105,7 @@ class ExtendedBinaryWriter extends BinaryWriter {
       // Convert to unsigned representation using two's complement
       n = maxValue + n;
     }
-    
+
     final result = Uint8List(s);
     for (int i = 0; i < s; i++) {
       result[i] = (n & _byteMask).toInt();
