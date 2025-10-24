@@ -134,14 +134,6 @@ class BEnum<T> extends BType<T> {
       final paramName = MirrorSystem.getName(param.simpleName);
       final fieldValue = fieldMap[paramName];
 
-      if (fieldValue == null && !param.hasDefaultValue) {
-        throw ArgumentError.value(
-          paramName,
-          'parameter',
-          'No matching field found for required parameter in variant ${variantResult.runtimeType}. Available fields: ${fieldMap.keys.join(', ')}',
-        );
-      }
-
       if (param.isNamed) {
         namedArgs[Symbol(paramName)] = fieldValue;
       } else {
