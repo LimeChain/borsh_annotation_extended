@@ -1,8 +1,6 @@
 import 'dart:typed_data';
-
 import 'package:test/test.dart';
-
-import 'structs.dart';
+import 'data.dart';
 
 void main() {
   group('extended types:', () {
@@ -53,7 +51,7 @@ void main() {
     test('unsigned types convert negative values (legacy behavior)', () {
       // Test that unsigned types still convert negative to positive (for backward compatibility)
       // Note: Use signed types (BI64, BI128) for proper negative value handling
-      
+
       // BU64 converts -1 to max uint64
       final bu64Struct = Test1(
         stringValue: "test",
@@ -61,12 +59,19 @@ void main() {
         bigIntValue: -BigInt.one,
         listOfStrings: ["a", "b", "c"],
         listOfInts: [1, 2, 3],
-        listOfListsOfInts: [[1, 2], [3, 4], [5, 6]],
+        listOfListsOfInts: [
+          [1, 2],
+          [3, 4],
+          [5, 6],
+        ],
         dynamicListOfStrings: ["x", "y", "z"],
       );
       final bu64Serialized = bu64Struct.toBorsh();
       final bu64Deserialized = Test1.fromBorsh(bu64Serialized);
-      expect(bu64Deserialized.bigIntValue, BigInt.parse('18446744073709551615'));
+      expect(
+        bu64Deserialized.bigIntValue,
+        BigInt.parse('18446744073709551615'),
+      );
 
       // BU128 converts -1 to max uint128
       final bu128Struct = StructWithNewTypes(
@@ -78,7 +83,10 @@ void main() {
       );
       final bu128Serialized = bu128Struct.toBorsh();
       final bu128Deserialized = StructWithNewTypes.fromBorsh(bu128Serialized);
-      expect(bu128Deserialized.u128Value, BigInt.parse('340282366920938463463374607431768211455'));
+      expect(
+        bu128Deserialized.u128Value,
+        BigInt.parse('340282366920938463463374607431768211455'),
+      );
     });
 
     test('float precision and edge cases', () {
@@ -219,9 +227,30 @@ void main() {
         // (i128, i64, i32, i16, i8, description)
         (BigInt.zero, BigInt.zero, 0, 0, 0, 'zero values'),
         (-BigInt.one, -BigInt.one, -1, -1, -1, 'negative one'),
-        (BigInt.parse('-123456789'), BigInt.parse('-123456789'), -123456789, -12345, -123, 'arbitrary negative'),
-        (BigInt.parse('-170141183460469231731687303715884105728'), BigInt.parse('-9223372036854775808'), -2147483648, -32768, -128, 'minimum values'),
-        (BigInt.parse('170141183460469231731687303715884105727'), BigInt.parse('9223372036854775807'), 2147483647, 32767, 127, 'maximum values'),
+        (
+          BigInt.parse('-123456789'),
+          BigInt.parse('-123456789'),
+          -123456789,
+          -12345,
+          -123,
+          'arbitrary negative',
+        ),
+        (
+          BigInt.parse('-170141183460469231731687303715884105728'),
+          BigInt.parse('-9223372036854775808'),
+          -2147483648,
+          -32768,
+          -128,
+          'minimum values',
+        ),
+        (
+          BigInt.parse('170141183460469231731687303715884105727'),
+          BigInt.parse('9223372036854775807'),
+          2147483647,
+          32767,
+          127,
+          'maximum values',
+        ),
       ];
 
       for (final (i128, i64, i32, i16, i8, description) in testCases) {
@@ -236,10 +265,26 @@ void main() {
         final serialized = struct.toBorsh();
         final deserialized = StructWithSignedTypes.fromBorsh(serialized);
 
-        expect(deserialized.i128Value, i128, reason: 'i128 failed for $description');
-        expect(deserialized.i64Value, i64, reason: 'i64 failed for $description');
-        expect(deserialized.i32Value, i32, reason: 'i32 failed for $description');
-        expect(deserialized.i16Value, i16, reason: 'i16 failed for $description');
+        expect(
+          deserialized.i128Value,
+          i128,
+          reason: 'i128 failed for $description',
+        );
+        expect(
+          deserialized.i64Value,
+          i64,
+          reason: 'i64 failed for $description',
+        );
+        expect(
+          deserialized.i32Value,
+          i32,
+          reason: 'i32 failed for $description',
+        );
+        expect(
+          deserialized.i16Value,
+          i16,
+          reason: 'i16 failed for $description',
+        );
         expect(deserialized.i8Value, i8, reason: 'i8 failed for $description');
       }
     });
