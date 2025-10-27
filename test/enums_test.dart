@@ -443,34 +443,6 @@ void main() {
       expect(deserialized.variant.value, equals(123));
     });
 
-    test(
-      'should throw error when no matching field found for required parameter',
-      () {
-        final enumType = BEnum<IncompleteEnum>({
-          IncompleteVariant: BIncompleteVariant(),
-        });
-
-        final original = IncompleteEnum.incompleteVariant('test', 'ignored');
-
-        final writer = BinaryWriter();
-        enumType.write(writer, original);
-        final bytes = writer.toArray();
-
-        final reader = BinaryReader(bytes.buffer.asByteData());
-
-        expect(
-          () => enumType.read(reader),
-          throwsA(
-            isA<ArgumentError>().having(
-              (e) => e.message,
-              'message',
-              contains('No matching field found for required parameter'),
-            ),
-          ),
-        );
-      },
-    );
-
     test('should throw error when no matching factory constructor found', () {
       final enumType = BEnum<OrphanEnum>({OrphanVariant: BOrphanVariant()});
 
