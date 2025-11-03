@@ -6,3 +6,4 @@ export 'src/binary_writer.dart';
 
 export "package:borsh_annotation/borsh_annotation.dart" hide BFixedArray;
 export "package:solana/solana.dart" show BBool, BPublicKey, Ed25519HDPublicKey;
+export "package:solana/encoder.dart";
