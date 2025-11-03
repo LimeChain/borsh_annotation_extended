@@ -1,6 +1,6 @@
 name: borsh_annotation_extended
 description: An extended borsh_annotation library
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/LimeChain/borsh_annotation_extended
 
 environment:
